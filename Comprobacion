@@ -1,0 +1,47 @@
+using System;
+
+namespace ValidacionMotor
+{
+    class Motor
+    {
+        public int NDeVueltas { get; set; }
+        public double Largo { get; set; }
+        public double Radio { get; set; }
+        public double Corriente { get; set; }
+        public double Voltaje { get; set; }
+        public double RPM { get; set; }
+        public Motor()
+        {
+
+        }
+        public void Calcular(double Largo,double Radio,int NDeVueltas,double RPM)
+        {
+            double RPMconv = (RPM * 3.1416) / 30;
+            double Fuerza = RPMconv / Radio;
+            this.Corriente = Fuerza / (NDeVueltas*Largo*9);
+            double Tau = Fuerza * Radio;
+            double Potencia = Tau * RPMconv;
+            this.Voltaje = Potencia / this.Corriente;
+            Console.WriteLine("El valor de Voltaje es {0}, el valor de la corriente es {1}",this.Voltaje,this.Corriente);
+            Console.WriteLine("La fuerza que ejerce el motor es {0}, el Valor de la Potencia es {1}", Fuerza, Potencia);
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            double Largo,Radio,RPM;
+            int NDV;
+            Motor objMotor = new Motor();
+            Console.WriteLine("Introducir Largo de motor:");
+            Largo = double.Parse(Console.ReadLine());
+            Console.WriteLine("Introducir Radio de motor:");
+            Radio = double.Parse(Console.ReadLine());
+            Console.WriteLine("Introducir el numero de vueltas del Motor:");
+            NDV = int.Parse(Console.ReadLine());
+            Console.WriteLine("Introducir las Revoluciones por minuto del motor deseadas:");
+            RPM = double.Parse(Console.ReadLine());
+            objMotor.Calcular(Largo,Radio,NDV,RPM);
+        }
+    }
+}
